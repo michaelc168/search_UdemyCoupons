@@ -225,8 +225,6 @@ def processDU(url):
         print('Invalid url:', url)
         return None
 
-    # print(soup.prettify)
-    # items = []
     elems = soup.findAll('section', class_ = 'card')
     for elem in elems:
         url = [result['href'] for result in elem.findAll('a', {'class':'card-header'})]
@@ -237,15 +235,6 @@ def processDU(url):
         else:
             details = requests.get(url).text
             item_url = "https://www.udemy.com/" + details.split('<a  href="https://www.udemy.com/')[1].split('" target="_blank">')[0]
-            # if "couponCode" in item_url:
-            #     item_coupon = item_url.split('couponCode=')[1].split('&')[0]
-            # item_category = [result.text.strip() for result in elem.findAll('span', {'class':'catSpan'})]
-            # item = {
-            #     'coupon': item_coupon,
-            #     'url': item_url,
-            #     'cat': item_category,
-            # }
-            # items.append(item)
             if "couponCode" in item_url:
                 item_url = item_url.replace('&site_ref=discudemy.com', '')
                 if item_url not in pool:
