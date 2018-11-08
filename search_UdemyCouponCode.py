@@ -84,7 +84,10 @@ def processFCD(url):
                 url = [result['href'] for result in detail_elem.findAll('a', href=True)]
                 item_url = url = ''.join(str(e) for e in url)             
                 if "couponCode" in item_url:
-                    item_url = item_url.split('&murl=')[1]
+                    try:
+                        item_url = item_url.split('&murl=')[1]
+                    except IndexError:
+                        item_url = url
                     item_url = item_url.replace('%3A', ':')
                     item_url = item_url.replace('%2F', '/')
                     item_url = item_url.replace('%3F', '?')
@@ -122,8 +125,7 @@ def processOCW(url):
             detail_elems = detail_soup.findAll('div', class_="button-linkwa")
             for detail_elem in detail_elems:
                 url = [result['href'] for result in detail_elem.findAll('a', href=True)]
-                url = ''.join(str(e) for e in url)
-                item_url = url
+                item_url = url = ''.join(str(e) for e in url)
                 if "couponCode" in item_url:
                     try:
                         item_url = item_url.split('&murl=')[1]
